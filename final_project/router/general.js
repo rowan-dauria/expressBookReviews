@@ -7,7 +7,7 @@ const public_users = express.Router();
 public_users.post("/register", (req,res) => {
     const { username, password } = req.body;
     if (!username || !password) return res.status(422).send('Username or password not provided');
-    if (isValid(username)) return res.status(400).send('There is already a user with that username');
+    if (!isValid(username)) return res.status(400).send('There is already a user with that username');
 
     const user = { username, password };
     users.push(user); // add user to DB
@@ -41,7 +41,6 @@ public_users.get('/author/:author',function (req, res) {
 // Get all books based on title
 public_users.get('/title/:title',function (req, res) {
     const title = req.params.title;
-    console.log(title);
     const filtered_books = [];
     Object.entries(books).forEach(([isbn, details]) => {
         if (details.title === title) {
