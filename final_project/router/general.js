@@ -59,13 +59,14 @@ public_users.get('/review/:isbn',function (req, res) {
     return res.status(200).send(books[isbn].reviews);
 });
 
-const getBooks = async () => {
-    try {
-        const books = (await axios.get('/')).data;
-        console.log(books);
-    } catch (error) {
+const getBooks = () => {
+    axios.get('/')
+    .then(response => {
+        console.log(response.data);
+    })
+    .catch(error => {
         console.log(error);
-    }
+    });
 }
 
 const getBookByISBN = async (isbn) => {
